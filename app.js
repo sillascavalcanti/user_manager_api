@@ -6,17 +6,13 @@ app.get("/", function(req, res){
     res.send("Hello World")
 })
 
-app.get("/user", function(req, res){
+app.get("/user/:nome/sobrenome/:sobrenome", function(req, res){
     res.send({
-        nome: "sillas"
+        nome: req.params.nome,
+        sobrenome: req.params.sobrenome
     })
 })
 
-app.delete("/user", function(req, res){
-    res.send({
-        nome: "sillas DELETADO"
-    })
-})
 
 app.listen(8080, function(){
     console.log("Server on")
