@@ -5,8 +5,8 @@
   "main": "test.js",
   "type": "module",
   "scripts": {
-    "dev": "npx nodemon app.js",
-    "start": "node app.js",
+    "dev": "npx nodemon src/app.js",
+    "start": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
