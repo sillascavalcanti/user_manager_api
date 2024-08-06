@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-export const productRouter = Router();
+const productRouter = Router();
 
 const router = Router();
 
@@ -14,3 +14,4 @@ router.get("/test", function (req, res) {
     res.send("testProduct");
 });
 
+export default productRouter;
