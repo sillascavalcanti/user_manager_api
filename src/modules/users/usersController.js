@@ -1,10 +1,10 @@
 import { Router } from "express";
 
-export const userRouter = Router();
+const userRouter = Router();
 
 const router = Router();
 
-userRouter.use("/user", router);
+userRouter.use("/users", router);
 
 router.get("/", function (req, res) {
     res.send("test");
@@ -13,3 +13,5 @@ router.get("/", function (req, res) {
 router.get("/:nome", function (req, res) {
     res.send("testnome");
 });
+
+export default userRouter;
