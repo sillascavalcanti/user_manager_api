@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "curso node",
   "main": "test.js",
+  "type": "module",
   "scripts": {
     "dev": "npx nodemon app.js",
     "start": "node app.js",
