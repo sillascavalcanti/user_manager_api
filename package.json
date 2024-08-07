@@ -2,11 +2,10 @@
   "name": "curso_node",
   "version": "1.0.0",
   "description": "curso node",
-  "main": "test.js",
-  "type": "module",
+  "main": "src/app.js",
   "scripts": {
-    "dev": "npx nodemon src/app.js",
-    "start": "node src/app.js",
+    "dev": "npx ts-node-dev --respawn --inspect --ignore-watch node_modules src/app.ts",
+    "start": "node src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -18,11 +17,15 @@
     "prisma": "^5.18.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.1.0",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "nodemon": "^3.1.4",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.4"
   }
 }
