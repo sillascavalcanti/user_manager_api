@@ -1,3 +1,7 @@
+export interface UserDeleteDTO{
+    id : number;
+}
+
 export interface UserInsertDTO{
     name:string;
     email:string;   

@@ -4,7 +4,7 @@
   "description": "curso node",
   "main": "src/app.js",
   "scripts": {
-    "dev": "npx ts-node-dev --respawn --inspect --ignore-watch node_modules src/app.ts",
+    "dev": "npx ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/app.ts",
     "start": "node src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,6 +26,7 @@
     "nodemon": "^3.1.4",
     "prettier": "^3.3.3",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.5.4"
   }
 }
