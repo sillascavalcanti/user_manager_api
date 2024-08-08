@@ -1,8 +1,8 @@
 import fs from "fs";
-import { fileURLToPath } from "url";
-import path, { dirname } from "path";
+import path from "path";
+import { Express } from "express-serve-static-core";
 
-export const routerLoader = (app) => {
+export const routerLoader = (app: Express) => {
     const modulesPath = path.join(__dirname, "modules");
 
     fs.readdirSync(modulesPath).forEach(async (dir) => {
