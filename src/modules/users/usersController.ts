@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
-import { addUser, getUsers } from "./usersService";
-import { UserInsertDTO } from "./dtos/userInsertDTO";
+import { addUser, deletUser, getUsers } from "./usersService";
+import { UserInsertDTO } from "./dtos/userDTO";
+import { UserDeleteDTO } from "./dtos/userDTO";
 
 const userRouter = Router();
 
@@ -17,6 +18,11 @@ router.post("/", async (req:Request<undefined,undefined,UserInsertDTO>, res:Resp
     const user = await addUser(req.body);
     res.send(user)
 });
+
+router.delete("/", async (req:Request<undefined,undefined,UserDeleteDTO>, res:Response): Promise<void> => {
+    const user = await deletUser(req.body);
+    res.send(user)
+})
 
 
 export default userRouter;
