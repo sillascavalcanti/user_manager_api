@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { UserModeles } from "./usersModules";
-import { UserInsertDTO } from "./dtos/userInsertDTO";
+import { UserInsertDTO } from "./dtos/userDTO";
+import { UserDeleteDTO } from "./dtos/userDTO";
 
 const prisma = new PrismaClient();
 
@@ -13,3 +14,7 @@ export const addUser = async (body:UserInsertDTO):Promise<UserModeles> => {
          data: body 
         });
 };
+
+export const deletUser = async (body:UserDeleteDTO) => {
+    return prisma.user.delete({where: body})
+}
