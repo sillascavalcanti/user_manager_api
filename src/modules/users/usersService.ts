@@ -12,7 +12,13 @@ export const getUsers = async (): Promise<UserModeles[]> => {
         throw new NotFoundExeception("user");
     }
 
-    if (user?.length == 0) {
+    return user;
+};
+
+export const getUsersById = async (body: UserDTO): Promise<UserModeles> => {
+    const user = await prisma.user.findUnique({ where: body });
+
+    if (user == null) {
         throw new NotFoundExeception("user");
     }
 
