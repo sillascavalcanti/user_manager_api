@@ -10,7 +10,7 @@ export const routerLoader = (app: Express) => {
 
         if (fs.statSync(modulesPath).isDirectory()) {
             const controllerPath = path.join(modulePath, `${dir}Controller.ts`);
-            
+
             if (fs.existsSync(controllerPath)) {
                 const controller = await import(controllerPath);
 
