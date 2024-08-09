@@ -21,12 +21,12 @@ export const getUsers = async (): Promise<UserModeles[]> => {
     return user;
 };
 
-export const addUser = async (body:UserInsertDTO):Promise<UserModeles> => {
+export const addUser = async (body: UserInsertDTO): Promise<UserModeles> => {
     return prisma.user.create({
-         data: body 
-        });
+        data: body,
+    });
 };
 
-export const deletUser = async (body:UserDeleteDTO) => {
-    return prisma.user.delete({where: body})
-}
+export const deletUser = async (body: UserDeleteDTO) => {
+    return prisma.user.delete({ where: body });
+};
