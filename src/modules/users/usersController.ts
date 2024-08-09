@@ -14,8 +14,9 @@ router.get("/", async (_, res: Response):Promise<void> => {
     const user = await getUsers().catch((error)=>{
         if(error instanceof NotFoundExeception){
             res.status(204);
+        } else {
+            res.status(500).send("Internal Server Error");
         }
-        res.status(500).send("Internal Server Error")
     });
     res.send(user);
 });

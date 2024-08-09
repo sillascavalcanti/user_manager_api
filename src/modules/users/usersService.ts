@@ -10,11 +10,11 @@ const prisma = new PrismaClient();
 export const getUsers = async (): Promise<UserModeles[]> => {
     const user = await prisma.user.findMany();
 
-    if(user.length == 0){
-        throw new InternalServerException("user")
+    if (user.length == 0) {
+        throw new InternalServerException("user");
     }
 
-    if(user?.length == 0){
+    if (user?.length == 0) {
         throw new NotFoundExeception("user");
     }
 
