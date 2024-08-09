@@ -1,7 +1,6 @@
 import { Request, Response, Router } from "express";
 import { addUser, deletUser, getUsers } from "./usersService";
-import { UserInsertDTO } from "./dtos/userDTO";
-import { UserDeleteDTO } from "./dtos/userDTO";
+import { UserDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
 
 const userRouter = Router();
@@ -24,7 +23,7 @@ router.get("/", async (_, res: Response): Promise<void> => {
 router.post(
     "/",
     async (
-        req: Request<undefined, undefined, UserInsertDTO>,
+        req: Request<undefined, undefined, UserDTO>,
         res: Response
     ): Promise<void> => {
         const user = await addUser(req.body);
@@ -35,7 +34,7 @@ router.post(
 router.delete(
     "/",
     async (
-        req: Request<undefined, undefined, UserDeleteDTO>,
+        req: Request<undefined, undefined, UserDTO>,
         res: Response
     ): Promise<void> => {
         const user = await deletUser(req.body);

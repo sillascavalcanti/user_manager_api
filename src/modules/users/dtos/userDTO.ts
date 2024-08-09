@@ -1,8 +1,4 @@
-export interface UserDeleteDTO {
-    id: number;
-}
-
-export interface UserInsertDTO {
+export interface UserDTO {
     name: string;
     email: string;
     cpf: string;
