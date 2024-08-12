@@ -3,6 +3,7 @@ import { UserModeles } from "./usersModules";
 import { UserDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
 import { BadRequestException } from "@exceptions/badRequestException";
+import { creatPasswordHashed } from "src/utils/passwordUtils";
 
 const prisma = new PrismaClient();
 
@@ -58,8 +59,13 @@ export const addUser = async (body: UserDTO): Promise<UserModeles> => {
         throw new BadRequestException("Cpf alredy exist");
     }
 
+    const user: UserDTO = {
+        ...body,
+        password: await creatPasswordHashed(body.password),
+    };
+
     return prisma.user.create({
-        data: body,
+        data: user,
     });
 };
 
