@@ -3,6 +3,7 @@ import { addUser, deletUser, getUsers, getUsersById } from "./usersService";
 import { UserDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
 import { ReturnError } from "@exceptions/dtos/exceptionDTO";
+import { UserModeles } from "./usersModules";
 
 const userRouter = Router();
 
@@ -24,10 +25,10 @@ router.get("/", async (_, res: Response): Promise<void> => {
 router.get(
     "/get",
     async (
-        req: Request<undefined, undefined, UserDTO>,
+        req: Request<undefined, undefined, UserModeles>,
         res: Response
     ): Promise<void> => {
-        const user = await getUsersById(req.body).catch((error) => {
+        const user = await getUsersById(req.body.id).catch((error) => {
             if (error instanceof NotFoundExeception) {
                 res.status(204);
             } else {
