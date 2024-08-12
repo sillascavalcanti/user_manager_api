@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { UserModeles } from "./usersModules";
 import { UserDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
+import { BadRequestException } from "@exceptions/badRequestException";
 
 const prisma = new PrismaClient();
 
@@ -47,6 +48,16 @@ export const getUsersById = async (id: number): Promise<UserModeles> => {
 };
 
 export const addUser = async (body: UserDTO): Promise<UserModeles> => {
+    const checkEmail = await getUserByEmail(body.email).catch(() => undefined);
+    if (checkEmail) {
+        throw new BadRequestException("Email alredy exist");
+    }
+
+    const checkCpf = await getUserByCpf(body.cpf).catch(() => undefined);
+    if (checkCpf) {
+        throw new BadRequestException("Cpf alredy exist");
+    }
+
     return prisma.user.create({
         data: body,
     });
