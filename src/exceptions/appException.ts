@@ -1,5 +1,9 @@
 export class AppException extends Error {
-    constructor(mensage: string) {
+    errorCode: number;
+
+    constructor(mensage: string, errorCode: number) {
         super(mensage);
+
+        this.errorCode = errorCode;
     }
 }

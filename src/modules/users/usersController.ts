@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import { addUser, deletUser, getUsers, getUsersById } from "./usersService";
 import { UserDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
+import { ReturnError } from "@exceptions/dtos/exceptionDTO";
 
 const userRouter = Router();
 
@@ -14,22 +15,28 @@ router.get("/", async (_, res: Response): Promise<void> => {
         if (error instanceof NotFoundExeception) {
             res.status(204);
         } else {
-            res.status(500).send("Internal Server Error");
+            new ReturnError(res, error);
         }
     });
     res.send(user);
 });
 
-router.get("/get", async (req:Request<undefined,undefined, UserDTO>, res: Response): Promise<void> => {
-    const user = await getUsersById(req.body).catch((error) => {
-        if (error instanceof NotFoundExeception) {
-            res.status(204);
-        } else {
-            res.status(500).send("Internal Server Error");
-        }
-    });
-    res.send(user);
-});
+router.get(
+    "/get",
+    async (
+        req: Request<undefined, undefined, UserDTO>,
+        res: Response
+    ): Promise<void> => {
+        const user = await getUsersById(req.body).catch((error) => {
+            if (error instanceof NotFoundExeception) {
+                res.status(204);
+            } else {
+                new ReturnError(res, error);
+            }
+        });
+        res.send(user);
+    }
+);
 
 router.post(
     "/",
@@ -37,7 +44,9 @@ router.post(
         req: Request<undefined, undefined, UserDTO>,
         res: Response
     ): Promise<void> => {
-        const user = await addUser(req.body);
+        const user = await addUser(req.body).catch((error) => {
+            new ReturnError(res, error);
+        });
         res.send(user);
     }
 );
@@ -48,7 +57,9 @@ router.delete(
         req: Request<undefined, undefined, UserDTO>,
         res: Response
     ): Promise<void> => {
-        const user = await deletUser(req.body);
+        const user = await deletUser(req.body).catch((error) => {
+            new ReturnError(res, error);
+        });
         res.send(user);
     }
 );
