@@ -15,8 +15,29 @@ export const getUsers = async (): Promise<UserModeles[]> => {
     return user;
 };
 
-export const getUsersById = async (body: UserDTO): Promise<UserModeles> => {
-    const user = await prisma.user.findUnique({ where: body });
+export const getUserByCpf = async (cpf: string): Promise<UserModeles> => {
+    const user = await prisma.user.findUnique({ where: { cpf } });
+
+    if (!user) {
+        throw new NotFoundExeception("User");
+    }
+
+    return user;
+};
+
+export const getUserByEmail = async (email: string): Promise<UserModeles> => {
+    const user = await prisma.user.findUnique({ where: { email } });
+
+    if (!user) {
+        throw new NotFoundExeception("User");
+    }
+
+    return user;
+};
+
+export const getUsersById = async (id: number): Promise<UserModeles> => {
+    console.log("sevice id", id);
+    const user = await prisma.user.findFirst({ where: { id } });
 
     if (user == null) {
         throw new NotFoundExeception("user");
