@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { AuthDto } from "./dtos/authDTO";
 import { validateAuth } from "./authService";
+import { ReturnError } from "@exceptions/dtos/exceptionDTO";
 
 const authRouter = Router();
 
@@ -14,7 +15,9 @@ router.post(
         req: Request<undefined, undefined, AuthDto>,
         res: Response
     ): Promise<void> => {
-        const user = await validateAuth(req.body);
+        const user = await validateAuth(req.body).catch((error) => {
+            new ReturnError(res, error);
+        });
         res.send(user);
     }
 );
