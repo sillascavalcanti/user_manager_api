@@ -4,6 +4,8 @@ import { UserDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
 import { ReturnError } from "@exceptions/dtos/exceptionDTO";
 import { UserModeles } from "./usersModules";
+import { Console } from "console";
+import { verifyToken } from "@utils/authUtils";
 
 const userRouter = Router();
 
@@ -11,7 +13,13 @@ const router = Router();
 
 userRouter.use("/users", router);
 
-router.get("/", async (_, res: Response): Promise<void> => {
+router.get("/", async (req: Request, res: Response): Promise<void> => {
+    const autorization = req.headers.authorization;
+
+    verifyToken(autorization).catch((error) => {
+        new ReturnError(res, error);
+    });
+
     const user = await getUsers().catch((error) => {
         if (error instanceof NotFoundExeception) {
             res.status(204);
