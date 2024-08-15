@@ -77,3 +77,9 @@ export const createUser = async (body: UserDTO): Promise<UserModeles> => {
 export const removeUser = async (body: UserDTO) => {
     return prisma.user.delete({ where: body });
 };
+
+export const removeUserById = async (query: string) => {
+    const user = await getUsersById(query);
+
+    await removeUser(user);
+};
