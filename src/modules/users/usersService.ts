@@ -38,8 +38,8 @@ export const getUserByEmail = async (email: string): Promise<UserModeles> => {
     return user;
 };
 
-export const getUsersById = async (query:string): Promise<UserModeles> => {
-    const id = await converteToInteger(query)
+export const getUsersById = async (query: string): Promise<UserDTO> => {
+    const id = await converteToInteger(query);
     const user = await prisma.user.findFirst({ where: { id } });
 
     if (user == null) {
@@ -76,4 +76,10 @@ export const createUser = async (body: UserDTO): Promise<UserModeles> => {
 
 export const removeUser = async (body: UserDTO) => {
     return prisma.user.delete({ where: body });
+};
+
+export const removeUserById = async (query: string) => {
+    const user = await getUsersById(query);
+
+    await removeUser(user);
 };
