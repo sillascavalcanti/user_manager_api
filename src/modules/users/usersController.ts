@@ -1,5 +1,11 @@
 import { Request, Response, Router } from "express";
-import { createUser, getUsers, getUsersById, removeUser } from "./usersService";
+import {
+    createUser,
+    getUsers,
+    getUsersById,
+    removeUser,
+    removeUserById,
+} from "./usersService";
 import { UserDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
 import { ReturnError } from "@exceptions/dtos/exceptionDTO";
@@ -51,6 +57,16 @@ const deleteUser = async (
     res.send(user);
 };
 
+const deleteUserById = async (
+    req: Request<undefined, undefined, UserDTO>,
+    res: Response
+): Promise<void> => {
+    const user = await removeUserById(req.url).catch((error) => {
+        new ReturnError(res, error);
+    });
+    res.send(user);
+};
+
 const userRouter = Router();
 
 const router = Router();
@@ -65,6 +81,8 @@ router.get("/userlist", getUserList);
 
 router.get("/user/:id", getUserById);
 
-router.delete("/delete/:id", deleteUser);
+router.delete("/delete/:id", deleteUserById);
+
+router.delete("/delete/", deleteUser);
 
 export default userRouter;
