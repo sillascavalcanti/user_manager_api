@@ -4,8 +4,6 @@ import { UserDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
 import { ReturnError } from "@exceptions/dtos/exceptionDTO";
 import { UserModeles } from "./usersModules";
-import { Console } from "console";
-import { verifyToken } from "@utils/authUtils";
 import { authMiddleware } from "src/middleware/authMiddleware";
 
 const getUserList = async (req: Request, res: Response): Promise<void> => {
