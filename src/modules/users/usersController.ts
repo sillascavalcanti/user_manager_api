@@ -23,7 +23,7 @@ const getUserById = async (
     req: Request<undefined, undefined, UserModeles>,
     res: Response
 ): Promise<void> => {
-    const user = await getUsersById(req.body.id).catch((error) => {
+    const user = await getUsersById(req.url).catch((error) => {
         if (error instanceof NotFoundExeception) {
             res.status(204);
         } else {
@@ -59,14 +59,14 @@ const router = Router();
 
 userRouter.use("/users", router);
 
+router.post("/create", insertUser);
+
 router.use(authMiddleware);
 
 router.get("/userlist", getUserList);
 
-router.get("/user", getUserById);
+router.get("/user/:id", getUserById);
 
-router.post("/create", insertUser);
-
-router.delete("/delete", deleteUser);
+router.delete("/delete/:id", deleteUser);
 
 export default userRouter;

@@ -4,6 +4,7 @@ import { UserDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
 import { BadRequestException } from "@exceptions/badRequestException";
 import { creatPasswordHashed } from "src/utils/passwordUtils";
+import { converteToInteger } from "@utils/urlUtils";
 
 const prisma = new PrismaClient();
 
@@ -37,8 +38,8 @@ export const getUserByEmail = async (email: string): Promise<UserModeles> => {
     return user;
 };
 
-export const getUsersById = async (id: number): Promise<UserModeles> => {
-    console.log("sevice id", id);
+export const getUsersById = async (query:string): Promise<UserModeles> => {
+    const id = await converteToInteger(query)
     const user = await prisma.user.findFirst({ where: { id } });
 
     if (user == null) {
@@ -57,6 +58,10 @@ export const createUser = async (body: UserDTO): Promise<UserModeles> => {
     const checkCpf = await getUserByCpf(body.cpf).catch(() => undefined);
     if (checkCpf) {
         throw new BadRequestException("Cpf alredy exist");
+    }
+
+    if (body.typeUser !== 1 && body.typeUser !== 2) {
+        throw new BadRequestException("User type is invalid");
     }
 
     const user: UserDTO = {
