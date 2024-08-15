@@ -59,6 +59,10 @@ export const createUser = async (body: UserDTO): Promise<UserModeles> => {
         throw new BadRequestException("Cpf alredy exist");
     }
 
+    if (body.typeUser !== 1 && body.typeUser !== 2) {
+        throw new BadRequestException("User type is invalid");
+    }
+
     const user: UserDTO = {
         ...body,
         password: await creatPasswordHashed(body.password),
