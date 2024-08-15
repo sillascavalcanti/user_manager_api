@@ -23,7 +23,7 @@ const getUserById = async (
     req: Request<undefined, undefined, UserModeles>,
     res: Response
 ): Promise<void> => {
-    const user = await getUsersById(req.body.id).catch((error) => {
+    const user = await getUsersById(req.url).catch((error) => {
         if (error instanceof NotFoundExeception) {
             res.status(204);
         } else {
