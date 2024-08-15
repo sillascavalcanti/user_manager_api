@@ -48,7 +48,7 @@ export const getUsersById = async (id: number): Promise<UserModeles> => {
     return user;
 };
 
-export const addUser = async (body: UserDTO): Promise<UserModeles> => {
+export const createUser = async (body: UserDTO): Promise<UserModeles> => {
     const checkEmail = await getUserByEmail(body.email).catch(() => undefined);
     if (checkEmail) {
         throw new BadRequestException("Email alredy exist");
@@ -69,6 +69,6 @@ export const addUser = async (body: UserDTO): Promise<UserModeles> => {
     });
 };
 
-export const deletUser = async (body: UserDTO) => {
+export const removeUser = async (body: UserDTO) => {
     return prisma.user.delete({ where: body });
 };
