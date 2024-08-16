@@ -18,7 +18,8 @@
     "paths": {
       "@modules/*": ["./src/modules/*"],
       "@exceptions/*":["./src/exceptions/*"],
-      "@utils/*":["./src/utils/*"]
+      "@utils/*":["./src/utils/*"],
+      "@enums/*":["./src/enums/*"]
     }
   }
 }
