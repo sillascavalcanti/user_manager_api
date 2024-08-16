@@ -10,15 +10,11 @@ import { UserDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
 import { ReturnError } from "@exceptions/dtos/exceptionDTO";
 import { UserModeles } from "./usersModules";
-import { authMiddleware } from "src/middleware/authMiddleware";
+import { authAdminMiddleware } from "src/middleware/authMiddleware";
 
 const getUserList = async (req: Request, res: Response): Promise<void> => {
     const user = await getUsers().catch((error) => {
-        if (error instanceof NotFoundExeception) {
-            res.status(204);
-        } else {
-            new ReturnError(res, error);
-        }
+        new ReturnError(res, error);
     });
     res.send(user);
 };
@@ -75,7 +71,7 @@ userRouter.use("/users", router);
 
 router.post("/create", insertUser);
 
-router.use(authMiddleware);
+router.use(authAdminMiddleware);
 
 router.get("/userlist", getUserList);
 
