@@ -1,4 +1,3 @@
-import { UserModeles } from "@modules/users/usersModules";
 import { AuthDto } from "./dtos/authDTO";
 import { getUserByEmail } from "@modules/users/usersService";
 import { validatePassword } from "@utils/passwordUtils";

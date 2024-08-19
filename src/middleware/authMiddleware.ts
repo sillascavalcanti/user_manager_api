@@ -9,16 +9,15 @@ export const authMiddleware = (
     res: Response,
     next: NextFunction
 ): void => {
-    const token = req.headers.authorization;
+    try{
+        const token = req.headers.authorization;
+        verifyToken(token)
+        next()
+    }catch(error){
+        new ReturnError(res, error)
+        next(error)
+    }
 
-    verifyToken(token)
-        .then(() => {
-            next();
-        })
-        .catch((error) => {
-            new ReturnError(res, error);
-            next(error);
-        });
 };
 
 export const authAdminMiddleware = async (
@@ -28,11 +27,9 @@ export const authAdminMiddleware = async (
 ) => {
     try {
         const token = req.headers.authorization;
-        console.log("token", token);
         const user = await verifyToken(token);
 
         if (user.typeUser !== Usertype.ADMIN) {
-            console.log(user.typeUser);
             throw new AuthException();
         }
 

@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { UserModeles } from "./usersModules";
-import { UserDTO } from "./dtos/userDTO";
+import { FindUserDTO, UserDTO, UserEditePasswordDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
 import { BadRequestException } from "@exceptions/badRequestException";
 import { creatPasswordHashed } from "src/utils/passwordUtils";
@@ -38,9 +38,14 @@ export const getUserByEmail = async (email: string): Promise<UserModeles> => {
     return user;
 };
 
-export const getUsersById = async (query: string): Promise<UserDTO> => {
-    const id = await converteToInteger(query);
-    const user = await prisma.user.findFirst({ where: { id } });
+export const getUsersById = async (id: string): Promise<FindUserDTO> => {
+
+    const {userId} = id
+
+    console.log(id)
+
+
+    const user = await prisma.user.findFirst({ where: { id:userId} });
 
     if (user == null) {
         throw new NotFoundExeception("user");
@@ -82,4 +87,22 @@ export const removeUserById = async (query: string) => {
     const user = await getUsersById(query);
 
     await removeUser(user);
+};
+
+export const updatePassword = async (
+    query: string,
+    userEditePassword: UserEditePasswordDTO
+): Promise<UserModeles> => {
+    const user = await getUsersById(query);
+
+    const newUser = {
+        ...user,
+        password: creatPasswordHashed(userEditePassword.password),
+    };
+
+    const newPassword = prisma.user.update({
+        where: { id: user.id },
+        data: newUser.password,
+    });
+    return newPassword;
 };

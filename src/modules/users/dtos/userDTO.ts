@@ -6,3 +6,15 @@ export interface UserDTO {
     password: string;
     typeUser: number;
 }
+
+export interface UserEditePasswordDTO {
+    id: string;
+    password: string;
+}
+
+export interface FindUserDTO {
+    id: string;
+    name: string;
+    email: string;
+    cpf: string;
+}
