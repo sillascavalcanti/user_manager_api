@@ -3,7 +3,6 @@ import {
     createUser,
     getUsers,
     getUsersById,
-    removeUser,
     removeUserById,
     updatePassword,
 } from "./usersService";
@@ -40,16 +39,6 @@ const insertUser = async (
     res: Response
 ): Promise<void> => {
     const user = await createUser(req.body).catch((error) => {
-        new ReturnError(res, error);
-    });
-    res.send(user);
-};
-
-const deleteUser = async (
-    req: Request<undefined, undefined, UserDTO>,
-    res: Response
-): Promise<void> => {
-    const user = await removeUser(req.body).catch((error) => {
         new ReturnError(res, error);
     });
     res.send(user);
@@ -96,7 +85,5 @@ router.get("/userlist", getUserList);
 router.get("/user/:id", getUserById);
 
 router.delete("/delete/:id", deleteUserById);
-
-router.delete("/delete/", deleteUser);
 
 export default userRouter;
