@@ -20,13 +20,13 @@ const getUserList = async (req: Request, res: Response): Promise<void> => {
 };
 
 const getUserById = async (
-    req: Request<FindUserDTO>,
+    req: Request<UserModeles>,
     res: Response
 ): Promise<void> => {
     const {id} = req.params
     const user = await getUsersById(id).catch((error) => {
         if (error instanceof NotFoundExeception) {
-            res.status(204);
+           new ReturnError(res, error)
         } else {
             new ReturnError(res, error);
         }
@@ -45,10 +45,10 @@ const insertUser = async (
 };
 
 const deleteUserById = async (
-    req: Request<undefined, undefined, UserDTO>,
+    req: Request<undefined, undefined, UserModeles>,
     res: Response
 ): Promise<void> => {
-    const user = await removeUserById(req.url).catch((error) => {
+    const user = await removeUserById(req.params).catch((error) => {
         new ReturnError(res, error);
     });
     res.send(user);
