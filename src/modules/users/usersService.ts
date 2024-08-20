@@ -1,10 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { UserModeles } from "./usersModules";
-import { FindUserDTO, UserDTO, UserEditePasswordDTO } from "./dtos/userDTO";
+import { UserDTO, UserEditePasswordDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
 import { BadRequestException } from "@exceptions/badRequestException";
 import { creatPasswordHashed } from "src/utils/passwordUtils";
-import { converteToInteger } from "@utils/urlUtils";
 
 const prisma = new PrismaClient();
 
@@ -38,14 +37,10 @@ export const getUserByEmail = async (email: string): Promise<UserModeles> => {
     return user;
 };
 
-export const getUsersById = async (id: string): Promise<FindUserDTO> => {
+export const getUsersById = async (id: number): Promise<UserModeles> => {
+    const userId = Number(id);
 
-    const {userId} = id
-
-    console.log(id)
-
-
-    const user = await prisma.user.findFirst({ where: { id:userId} });
+    const user = await prisma.user.findFirst({ where: { id: userId } });
 
     if (user == null) {
         throw new NotFoundExeception("user");

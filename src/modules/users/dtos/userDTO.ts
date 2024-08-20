@@ -8,6 +8,6 @@ export interface UserDTO {
 }
 
 export interface UserEditePasswordDTO {
-    id: string;
+    id: number;
     password: string;
 }
