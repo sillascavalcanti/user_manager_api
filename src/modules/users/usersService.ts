@@ -1,10 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { UserModeles } from "./usersModules";
-import { UserDTO } from "./dtos/userDTO";
+import { UserDTO, UserEditePasswordDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
 import { BadRequestException } from "@exceptions/badRequestException";
 import { creatPasswordHashed } from "src/utils/passwordUtils";
-import { converteToInteger } from "@utils/urlUtils";
 
 const prisma = new PrismaClient();
 
@@ -38,9 +37,10 @@ export const getUserByEmail = async (email: string): Promise<UserModeles> => {
     return user;
 };
 
-export const getUsersById = async (query: string): Promise<UserDTO> => {
-    const id = await converteToInteger(query);
-    const user = await prisma.user.findFirst({ where: { id } });
+export const getUsersById = async (id: number): Promise<UserModeles> => {
+    const userId = Number(id);
+
+    const user = await prisma.user.findFirst({ where: { id: userId } });
 
     if (user == null) {
         throw new NotFoundExeception("user");
@@ -74,12 +74,30 @@ export const createUser = async (body: UserDTO): Promise<UserModeles> => {
     });
 };
 
-export const removeUser = async (body: UserDTO) => {
+export const removeUser = async (body: UserModeles) => {
     return prisma.user.delete({ where: body });
 };
 
-export const removeUserById = async (query: string) => {
-    const user = await getUsersById(query);
+export const removeUserById = async (id: number) => {
+    const user = await getUsersById(id);
 
     await removeUser(user);
+};
+
+export const updatePassword = async (
+    id: number,
+    userEditePassword: UserEditePasswordDTO
+): Promise<UserModeles> => {
+    const user = await getUsersById(id);
+
+    const newUser = {
+        ...user,
+        password: await creatPasswordHashed(userEditePassword.password),
+    };
+
+    const newPassword = prisma.user.update({
+        where: { id: user.id },
+        data: { password: newUser.password },
+    });
+    return newPassword;
 };
