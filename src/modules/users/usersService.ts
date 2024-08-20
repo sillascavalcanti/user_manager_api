@@ -74,7 +74,7 @@ export const createUser = async (body: UserDTO): Promise<UserModeles> => {
     });
 };
 
-export const removeUser = async (body: UserDTO) => {
+export const removeUser = async (body: UserModeles) => {
     return prisma.user.delete({ where: body });
 };
 
