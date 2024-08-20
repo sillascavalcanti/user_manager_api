@@ -7,12 +7,11 @@ import {
     removeUserById,
     updatePassword,
 } from "./usersService";
-import { FindUserDTO, UserDTO, UserEditePasswordDTO } from "./dtos/userDTO";
+import { UserDTO, UserEditePasswordDTO } from "./dtos/userDTO";
 import { NotFoundExeception } from "@exceptions/notFoundException";
 import { ReturnError } from "@exceptions/dtos/exceptionDTO";
-import { UserModeles } from "./usersModules";
 import { authAdminMiddleware, authMiddleware } from "src/middleware/authMiddleware";
-import { error } from "console";
+import { UserModeles } from "./usersModules";
 
 const getUserList = async (req: Request, res: Response): Promise<void> => {
     const user = await getUsers().catch((error) => {
@@ -71,7 +70,6 @@ const editePassword = async (
     res: Response
 ): Promise<void> => {
     const {id} = req.params
-    console.log(id)
     const user = await updatePassword(id, req.body).catch((error) => {
         new ReturnError(res, error);
     });
