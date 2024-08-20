@@ -78,26 +78,26 @@ export const removeUser = async (body: UserModeles) => {
     return prisma.user.delete({ where: body });
 };
 
-export const removeUserById = async (query: string) => {
-    const user = await getUsersById(query);
+export const removeUserById = async (id: number) => {
+    const user = await getUsersById(id);
 
     await removeUser(user);
 };
 
 export const updatePassword = async (
-    query: string,
+    id: number,
     userEditePassword: UserEditePasswordDTO
 ): Promise<UserModeles> => {
-    const user = await getUsersById(query);
+    const user = await getUsersById(id);
 
     const newUser = {
         ...user,
-        password: creatPasswordHashed(userEditePassword.password),
+        password: await creatPasswordHashed(userEditePassword.password),
     };
 
     const newPassword = prisma.user.update({
         where: { id: user.id },
-        data: newUser.password,
+        data: { password: newUser.password },
     });
     return newPassword;
 };
