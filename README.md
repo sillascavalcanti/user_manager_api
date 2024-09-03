@@ -1,7 +1,5 @@
 # Node API
 
-## English
-
 ## Description
 Node API is a RESTful API built with Node.js and Express, designed for secure user authentication and management. The API uses PostgreSQL as its database and follows the MVC (Model-View-Controller) architecture, ensuring a clear separation of concerns.
 
@@ -10,23 +8,36 @@ Node API is a RESTful API built with Node.js and Express, designed for secure us
 - **User Management:** CRUD operations for user data.
 - **PostgreSQL Integration:** Efficient data handling with PostgreSQL.
 - **MVC Architecture:** Clean and maintainable code structure.
-Installation
-Clone the repository:
-bash
+
+# Getting Started
+## Prerequisites
+Before you begin, ensure you have the following installed:
+
+[Node.js](https://nodejs.org/pt) (v14.x or later)
+[npm](https://www.npmjs.com/) (v6.x or later)
+  
+## Installation
+1. **Clone the repository:**
+
+
+```bash
 Copy code
-git clone https://github.com/sillascavalcanti/node_api.git
-Install dependencies:
-bash
+git clonehttps://github.com/sillascavalcanti/node_api.git
+````
+2. **Install dependencies:**
+```bash
 Copy code
 npm install
-Configure the environment variables:
+```
+3. **Configure the environment variables:** <br/>
 Create a .env file and set up your database connection and JWT secret.
-Run the application:
-bash
+4. **Run the application:**
+```bash
 Copy code
 npm start
-Usage
-The API provides endpoints for user authentication and management. You can use tools like Postman to test the endpoints.
+```
+# Usage
+- The API provides endpoints for user authentication and management. You can use tools like Postman to test the endpoints.
 
-License
+# License
 This project is licensed under the MIT License.
