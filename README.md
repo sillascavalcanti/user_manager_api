@@ -13,8 +13,8 @@ Node API is a RESTful API built with Node.js and Express, designed for secure us
 ## Prerequisites
 Before you begin, ensure you have the following installed:
 
-[Node.js](https://nodejs.org/pt) (v14.x or later)
-[npm](https://www.npmjs.com/) (v6.x or later)
+- [Node.js](https://nodejs.org/pt) (v14.x or later)
+- [npm](https://www.npmjs.com/) (v6.x or later)
   
 ## Installation
 1. **Clone the repository:**
